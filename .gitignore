@@ -1,0 +1,56 @@
+# Python bytecode:
+*.py[co]
+
+# Packaging files:
+*.egg*
+
+# Editor temp files:
+*.swp
+*~
+.cache/
+
+# SQLite3 database files:
+*.db
+
+# Redis database files:
+*.rdb
+
+# Logs:
+*.log
+
+# Eclipse settings:
+*.project
+*.prefs
+*.pydevproject
+
+# media and static
+media
+collected_static
+
+# Rope
+.ropeproject
+
+# pyCharm
+.idea/
+
+# bower components
+bower_components
+
+# TODO
+*.todo
+
+# docs
+docs/_build
+
+build/
+.tox/
+
+# ipython
+*.ipynb
+.ipynb_checkpoints/
+
+# pyenv local
+.python-version
+
+# autoenv
+.env
