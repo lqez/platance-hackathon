@@ -1,0 +1,7 @@
+{
+  "name": "baechago2",
+  "dependencies": {
+    "html5shiv": "latest",
+    "bootstrap": "latest"
+  }
+}
