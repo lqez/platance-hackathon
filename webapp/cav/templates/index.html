@@ -1,8 +1,62 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-<div class="starter-template">
-  <h1>Bootstrap starter template</h1>
-  <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+<div class="row">
+  <div class="col-xs-12 col-md-4">
+    {% include "form.html" %}
+  </div>
+  <div class="col-xs-12 col-md-8">
+    <label for="dateInput">Map</label>
+    <div id="map"></div>
+  </div>
 </div>
+<script>
+var map;
+var markers = [];
+
+$('#fetch').click(function () {
+    $.ajax({
+        url: "{% url "fetch" %}",
+        data: { date: $('#dateInput').val(), time: $('#timeInput').val() }
+    })
+    .done(function(data) {
+        $.each(markers, function(idx, marker) {
+            marker.setMap(null);
+            delete marker;
+        });
+
+        markers = [];
+        $.each(data.orders, function(idx, val) {
+            position = {lat: parseFloat(val.latitude), lng: parseFloat(val.longitude)};
+            console.log(position);
+
+            var marker = new google.maps.Marker({
+                position: position,
+                map: map
+            });
+            markers.push(marker);
+        });
+    });
+});
+
+function initMap() {
+  var myLatLng = {lat: 37.5104645, lng: 127.0233404};
+
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 12,
+    center: myLatLng
+  });
+
+  var image = '{% static "image/hq.png" %}';
+  var marker = new google.maps.Marker({
+    position: myLatLng,
+    map: map,
+    icon: image,
+    title: 'HQ'
+  });
+}
+</script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&signed_in=true&callback=initMap"></script>
 {% endblock %}

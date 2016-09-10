@@ -12,21 +12,25 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{% static "image/plating.ico" %}" type="image/x-icon">
-    <link rel="icon" href="{% static "image/plating.ico" %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static "image/favicon.ico" %}" type="image/x-icon">
+    <link rel="icon" href="{% static "image/favicon.ico" %}" type="image/x-icon">
 
-    <!-- Loading project css -->
+    <!-- CSS -->
     <link href="{% static "bower_components/bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css" %}" rel="stylesheet">
     <link href="{% static "css/default.css" %}" rel="stylesheet">
+
+    <!-- JavaScripts -->
+    <script src="{% static "bower_components/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" %}"></script>
+    <script src="{% static "bower_components/html5shiv/dist/html5shiv.min.js" %}"></script>
 </head>
 <body>
 {% include "nav.html" %}
-<div class="container">
+<div class="container-fluid">
     {% block content %}{% endblock %}
 </div>
-<script src="{% static "bower_components/jquery/dist/jquery.min.js" %}"></script>
-<script src="{% static "bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
-<script src="{% static "bower_components/html5shiv/dist/html5shiv.min.js" %}"></script>
 {% block script %}{% endblock %}
 </body>
 </html>

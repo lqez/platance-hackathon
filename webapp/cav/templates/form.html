@@ -1,0 +1,28 @@
+<form>
+  <div class="form-group">
+    <label for="dateInput">Date</label>
+    <input class="form-control" id="dateInput" placeholder="Date">
+    <p class="help-block">Pick a date for simulating.</p>
+  </div>
+  <div class="form-group">
+    <label for="time">Time</label>
+    <input type="hidden" id="timeInput">
+    <p>
+    {% for time in deliveryTimes %}
+    <button type="button" class="btn btn-default btn-time" data-time="{{ time }}">{{ time }}</button>
+    {% endfor %}
+    </p>
+  </div>
+  <button type="button" id="fetch" class="btn btn-primary">Fetch</button>
+  <button type="button" id="fetch" class="btn btn-info">Simulate</button>
+</form>
+<script>
+$('#dateInput').datepicker({
+    format: 'yyyy-mm-dd'
+});
+$('.btn-time').click(function() {
+    $('.btn-time').removeClass('btn-info');
+    $('#timeInput').val($(this).data('time'));
+    $(this).addClass('btn-info');
+});
+</script>
