@@ -11,6 +11,7 @@
 
 # SQLite3 database files:
 *.db
+*.sqlite3
 
 # Redis database files:
 *.rdb
