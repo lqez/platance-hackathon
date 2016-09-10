@@ -18,6 +18,10 @@ for line in fileinput.input():
 
     points.append([float(res[0]), float(res[1])])
 
+
+if len(points) < riders:
+    riders = len(points)
+
 np_points = array(points)
 k_means = KMeans(init='k-means++', n_clusters=riders, n_init=10)
 k_means.fit(np_points)

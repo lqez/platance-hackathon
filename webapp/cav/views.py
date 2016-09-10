@@ -74,7 +74,10 @@ def simulate(request):
                 order_list.append(order)
             result.append(order_list)
         proc.wait()
+    elif algorithm == '13k':
+        pass
 
+    # Finalize
     final = []
     for path in result:
         arr = []
