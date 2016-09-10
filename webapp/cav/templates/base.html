@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=0.82"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+    <!-- Google fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,600,700,900' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static "image/plating.ico" %}" type="image/x-icon">
+    <link rel="icon" href="{% static "image/plating.ico" %}" type="image/x-icon">
+
+    <!-- Loading project css -->
+    <link href="{% static "bower_components/bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/default.css" %}" rel="stylesheet">
+</head>
+<body>
+<div id="content" class="box">
+    <div class="wrap">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+<script src="{% static "bower_components/jquery/dist/jquery.min.js" %}"></script>
+<script src="{% static "bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+<script src="{% static "bower_components/html5shiv/dist/html5shiv.min.js" %}"></script>
+{% block script %}{% endblock %}
+</body>
+</html>
