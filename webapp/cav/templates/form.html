@@ -14,12 +14,32 @@
     </p>
   </div>
   <button type="button" id="fetch" class="btn btn-primary">Fetch</button>
-  <button type="button" id="fetch" class="btn btn-info">Simulate</button>
+</form>
+<hr>
+<form>
+  <div class="form-group">
+    <label for="algorithm">Algorithm</label>
+    <select id="algorithm">
+      <option value="random">Random</option>
+      <option value="basic">Basic</option>
+    </select>
+    <p class="help-block">Choose an algorithm to be used.</p>
+  </div>
+  <div class="form-group">
+    <label for="riders">Riders</label>
+    <input class="form-control" id="riders" value="6">
+    <p class="help-block">How many riders to be simulated?</p>
+  </div>
+  <button type="button" id="simulate" class="btn btn-info">Simulate</button>
 </form>
 <script>
 $('#dateInput').datepicker({
     format: 'yyyy-mm-dd'
 });
+$("#algorithm").select2({
+    width: '100%'
+});
+
 $('.btn-time').click(function() {
     $('.btn-time').removeClass('btn-info');
     $('#timeInput').val($(this).data('time'));

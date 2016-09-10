@@ -13,5 +13,9 @@ form {
 
 #map {
   width: 100%;
-  height: 600px;
+  min-height: 560px;
+}
+ 
+select {
+  display: block;
 }

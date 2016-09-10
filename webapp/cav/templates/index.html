@@ -15,18 +15,22 @@
 var map;
 var markers = [];
 
+function clearMarkers() {
+    $.each(markers, function(idx, marker) {
+        marker.setMap(null);
+        delete marker;
+    });
+
+    markers = [];
+}
+
 $('#fetch').click(function () {
     $.ajax({
         url: "{% url "fetch" %}",
         data: { date: $('#dateInput').val(), time: $('#timeInput').val() }
     })
     .done(function(data) {
-        $.each(markers, function(idx, marker) {
-            marker.setMap(null);
-            delete marker;
-        });
-
-        markers = [];
+        clearMarkers();
         $.each(data.orders, function(idx, val) {
             position = {lat: parseFloat(val.latitude), lng: parseFloat(val.longitude)};
             console.log(position);
@@ -36,6 +40,48 @@ $('#fetch').click(function () {
                 map: map
             });
             markers.push(marker);
+        });
+    });
+});
+
+
+$('#simulate').click(function () {
+    $.ajax({
+        url: "{% url "simulate" %}",
+        data: { 
+            date: $('#dateInput').val(),
+            time: $('#timeInput').val(),
+            algorithm: $('#algorithm').val(),
+            riders: $('#riders').val()
+        }
+    })
+    .done(function(data) {
+        clearMarkers();
+        $.each(data.result, function(idx, val) {
+            position = {lat: parseFloat(val.latitude), lng: parseFloat(val.longitude)};
+            console.log(position);
+
+            var marker_image = '{% static "image/rider-" %}';
+            var marker = new google.maps.Marker({
+                position: position,
+                icon: marker_image + val.color + ".png",
+                zIndex: 2,
+                map: map
+            });
+            markers.push(marker);
+
+    //anchor: new google.maps.Point(0, 32)
+            var heat_image = {
+                url: '{% static "image/heat-" %}' + val.color + ".png",
+                anchor: new google.maps.Point(64, 64),
+            };
+            var heat = new google.maps.Marker({
+                position: position,
+                icon: heat_image,
+                zIndex: 1,
+                map: map
+            });
+            markers.push(heat);
         });
     });
 });

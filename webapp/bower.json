@@ -3,6 +3,7 @@
   "dependencies": {
     "jquery": "latest",  
     "html5shiv": "latest",
-    "bootstrap": "latest"
+    "bootstrap": "latest",
+    "select2": "latest"
   }
 }
