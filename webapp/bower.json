@@ -1,6 +1,7 @@
 {
   "name": "baechago2",
   "dependencies": {
+    "jquery": "latest",  
     "html5shiv": "latest",
     "bootstrap": "latest"
   }
