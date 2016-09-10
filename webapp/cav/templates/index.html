@@ -12,16 +12,23 @@
   </div>
 </div>
 <script>
+var HQ = {lat: 37.5104645, lng: 127.0233404};
 var map;
 var markers = [];
+var paths = [];
 
-function clearMarkers() {
+function clear() {
     $.each(markers, function(idx, marker) {
         marker.setMap(null);
         delete marker;
     });
-
     markers = [];
+
+    $.each(paths, function(idx, path) {
+        path.setMap(null);
+        delete path;
+    });
+    paths = [];
 }
 
 $('#fetch').click(function () {
@@ -30,10 +37,9 @@ $('#fetch').click(function () {
         data: { date: $('#dateInput').val(), time: $('#timeInput').val() }
     })
     .done(function(data) {
-        clearMarkers();
+        clear();
         $.each(data.orders, function(idx, val) {
             position = {lat: parseFloat(val.latitude), lng: parseFloat(val.longitude)};
-            console.log(position);
 
             var marker = new google.maps.Marker({
                 position: position,
@@ -56,47 +62,59 @@ $('#simulate').click(function () {
         }
     })
     .done(function(data) {
-        clearMarkers();
+        clear();
         $.each(data.result, function(idx, val) {
-            position = {lat: parseFloat(val.latitude), lng: parseFloat(val.longitude)};
-            console.log(position);
+            var color = idx + 1;
+            var path = [HQ];
+            $.each(val, function(idx, val) {
+                position = {lat: parseFloat(val.latitude), lng: parseFloat(val.longitude)};
 
-            var marker_image = '{% static "image/rider-" %}';
-            var marker = new google.maps.Marker({
-                position: position,
-                icon: marker_image + val.color + ".png",
+                var marker_image = '{% static "image/rider-" %}';
+                var marker = new google.maps.Marker({
+                    position: position,
+                    icon: marker_image + color + ".png",
+                    zIndex: 3,
+                    map: map
+                });
+                markers.push(marker);
+
+                var heat_image = {
+                    url: '{% static "image/heat-" %}' + color + ".png",
+                    anchor: new google.maps.Point(64, 64),
+                };
+                var heat = new google.maps.Marker({
+                    position: position,
+                    icon: heat_image,
+                    zIndex: 1,
+                    map: map
+                });
+                markers.push(heat);
+                path.push(position);
+            });
+
+            var path = new google.maps.Polyline({
+                path: path,
+                geodesic: true,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 4,
                 zIndex: 2,
-                map: map
             });
-            markers.push(marker);
-
-    //anchor: new google.maps.Point(0, 32)
-            var heat_image = {
-                url: '{% static "image/heat-" %}' + val.color + ".png",
-                anchor: new google.maps.Point(64, 64),
-            };
-            var heat = new google.maps.Marker({
-                position: position,
-                icon: heat_image,
-                zIndex: 1,
-                map: map
-            });
-            markers.push(heat);
+            path.setMap(map);
+            paths.push(path);
         });
     });
 });
 
 function initMap() {
-  var myLatLng = {lat: 37.5104645, lng: 127.0233404};
-
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 12,
-    center: myLatLng
+    center: HQ
   });
 
   var image = '{% static "image/hq.png" %}';
   var marker = new google.maps.Marker({
-    position: myLatLng,
+    position: HQ,
     map: map,
     icon: image,
     title: 'HQ'
